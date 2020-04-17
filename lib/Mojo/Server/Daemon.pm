@@ -108,6 +108,12 @@ sub _build_tx {
 
       # Last keep-alive request or corrupted connection
       my $c = $self->{connections}{$id};
+
+      unless ($c) {
+          $self->app->log->warn("There is no connection $id now. Maybe disconnected by the pair because this transaction took too long");
+          return;
+      }
+
       $tx->res->headers->connection('close')
         if $c->{requests} >= $self->max_requests || $tx->req->error;
 
