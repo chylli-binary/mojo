@@ -110,7 +110,7 @@ sub _build_tx {
       my $c = $self->{connections}{$id};
 
       unless ($c) {
-          $self->emit(client_disconnect => $id);
+          $tx->emit(client_disconnect => $id);
           return;
       }
 
