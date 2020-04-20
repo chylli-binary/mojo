@@ -110,7 +110,7 @@ sub _build_tx {
       my $c = $self->{connections}{$id};
 
       unless ($c) {
-          $self->app->log->warn("There is no connection $id now. Maybe disconnected by the pair because this transaction took too long");
+          $self->emit(client_disconnect => $id);
           return;
       }
 
